@@ -1,7 +1,7 @@
 # ssh_certificate_talk
 Talk/Session for warwick BSc year 2. 
 
-$${\color{red}(Not \space recommended \space for \space production \space use \space only \space for \space testing/demo!)}$$ 
+$${\color{red}(Not \space recommended \space for \space production \space use, \space only \space for \space testing/demo!)}$$ 
 
 ## File details 
 
@@ -24,6 +24,16 @@ $${\color{red}(Not \space recommended \space for \space production \space use \s
 ├── docker-entrypoint.sh
 └── slides
     └── SSH Talk (Jumphost DMZ System).pdf
+```
+
+## Docker Compose 
+
+Docker compose has been used to manage images and containers. 
+
+```
+docker-compose build
+docker-compose up --force-recreate -d
+docker-compose down
 ```
 
 ## Configuration and Testing SSH 
