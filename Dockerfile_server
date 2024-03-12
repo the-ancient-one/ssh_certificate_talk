@@ -1,0 +1,28 @@
+FROM rockylinux:9.3
+
+RUN yum update -y && \
+	yum install -y \
+	openssh-server \
+	openssh-clients \
+	openssh \
+    procps \
+    nc && \ 
+	yum clean all && \
+	rm -rf /var/cache/yum
+
+COPY docker-entrypoint.sh /
+
+RUN chmod +x /docker-entrypoint.sh && \
+    groupadd apache && useradd -g apache -s /bin/bash apache && \
+    mkdir /etc/ssh/auth_principals/ && \
+    echo "apache" > /etc/ssh/auth_principals/web-server && \
+    echo "TrustedUserCAkeys /etc/ssh/ca.pub" >> /etc/ssh/sshd_config  && \
+    echo "PermitRootLogin yes " >> /etc/ssh/sshd_config && \
+    echo "PubkeyAuthentication yes " >> /etc/ssh/sshd_config    && \
+    echo "PasswordAuthentication no " >> /etc/ssh/sshd_config && \
+    echo "ChallengeResponseAuthentication no " >> /etc/ssh/sshd_config && \
+    echo "UsePAM yes" >> /etc/ssh/sshd_config
+
+EXPOSE 22
+
+ENTRYPOINT ["/docker-entrypoint.sh"]

@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  ssh_server:
+    build:
+      context: .
+      dockerfile: Dockerfile_server
+    container_name: ssh_server
+    networks:
+      ssh_network:
+        ipv4_address: 172.20.0.2 # Assign IP address to the server container
+
+  ssh_client:
+    build:
+      context: .
+      dockerfile: Dockerfile_client
+    container_name: ssh_client
+    networks:
+      ssh_network:
+        ipv4_address: 172.20.0.3 # Assign IP address to the client container
+
+networks:
+  ssh_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/24
+

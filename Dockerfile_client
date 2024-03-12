@@ -1,0 +1,14 @@
+FROM rockylinux:9.3
+
+RUN yum update -y && \
+	yum install -y \
+	openssh-clients \
+	openssh \
+    procps \
+    nc && \
+	yum clean all && \
+	rm -rf /var/cache/yum
+
+EXPOSE 22
+
+CMD ["sleep", "infinity"]
